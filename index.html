@@ -13,21 +13,21 @@ gtag('config','G-N0G9Z62CVS');
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#c9d6f5">
-<title>Bubble Shooter — Play Free Online | 103 Levels Bubble Pop Game</title>
-<meta name="description" content="Play Bubble Shooter free in your browser! 103 colorful levels, glossy 3D bubbles, power-ups and star rewards. A great Bubble Shooter Classic alternative - no download needed, pop bubbles now!" />
-<meta name="keywords" content="bubble shooter, bubble pop, bubble shooter free, play bubble shooter, bubble game, 103 levels, free online game, mobile bubble game, bubble shooter apk, bubble shooter classic alternative, games like bubble shooter, bubble witch saga alternative, free bubble games" />
+<title>Bubble Shooter — Play Free Online | 1000 Levels Bubble Pop Game</title>
+<meta name="description" content="Play Bubble Shooter free in your browser! 1000 colorful levels, glossy 3D bubbles, power-ups and star rewards. A great Bubble Shooter Classic alternative - no download needed, pop bubbles now!" />
+<meta name="keywords" content="bubble shooter, bubble pop, bubble shooter free, play bubble shooter, bubble game, 1000 levels, free online game, mobile bubble game, bubble shooter apk, bubble shooter classic alternative, games like bubble shooter, bubble witch saga alternative, free bubble games" />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://anikur103.github.io/bubble-pop/" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Bubble Shooter — 103 Levels of Bubble Popping Fun" />
-<meta property="og:description" content="103 colorful levels! Glossy 3D bubbles, power-ups, combos and star rewards. Play free in your browser!" />
+<meta property="og:title" content="Bubble Shooter — 1000 Levels of Bubble Popping Fun" />
+<meta property="og:description" content="1000 colorful levels! Glossy 3D bubbles, power-ups, combos and star rewards. Play free in your browser!" />
 <meta property="og:url" content="https://anikur103.github.io/bubble-pop/" />
 <meta property="og:site_name" content="Bubble Shooter" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Bubble Shooter — Free 103-Level Bubble Pop" />
-<meta name="twitter:description" content="Pop glossy 3D bubbles through 103 levels! Power-ups, combos, stars. Play free!" />
+<meta name="twitter:title" content="Bubble Shooter — Free 1000-Level Bubble Pop" />
+<meta name="twitter:description" content="Pop glossy 3D bubbles through 1000 levels! Power-ups, combos, stars. Play free!" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"VideoGame","name":"Bubble Shooter","alternateName":"Bubble Shooter - 103 Levels","description":"Free bubble shooter game with 103 colorful levels. Match 3+ glossy 3D bubbles, use bomb/rainbow/row-clear power-ups, earn stars and coins. Play in browser or download Android APK.","genre":["Puzzle","Casual","Arcade","Bubble Shooter"],"gamePlatform":["Web Browser","Android","Mobile"],"applicationCategory":"Game","applicationSubCategory":"Puzzle Game","operatingSystem":"Web, Android","numberOfPlayers":"1","playMode":"SinglePlayer","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"Anikur"},"url":"https://anikur103.github.io/bubble-pop/","downloadUrl":"https://anikur103.github.io/bubble-pop/bubble-shooter.apk"}
+{"@context":"https://schema.org","@type":"VideoGame","name":"Bubble Shooter","alternateName":"Bubble Shooter - 1000 Levels","description":"Free bubble shooter game with 1000 colorful levels. Match 3+ glossy 3D bubbles, use bomb/rainbow/row-clear power-ups, earn stars and coins. Play in browser or download Android APK.","genre":["Puzzle","Casual","Arcade","Bubble Shooter"],"gamePlatform":["Web Browser","Android","Mobile"],"applicationCategory":"Game","applicationSubCategory":"Puzzle Game","operatingSystem":"Web, Android","numberOfPlayers":"1","playMode":"SinglePlayer","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"Anikur"},"url":"https://anikur103.github.io/bubble-pop/","downloadUrl":"https://anikur103.github.io/bubble-pop/bubble-shooter.apk"}
 </script>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
@@ -62,6 +62,8 @@ gtag('config','G-N0G9Z62CVS');
     background:rgba(35,45,95,0.85); color:#fff; font-size:14px; font-weight:bold;
     cursor:pointer; touch-action:manipulation; min-width:110px; }
   #audiotoggles.home-layout .audio-btn { padding:10px 20px; font-size:16px; min-width:180px; }
+</style>
+</head>
 </style>
 </head>
 <body>
@@ -265,13 +267,13 @@ function star(cx,cy,r,rot){
 }
 /* Bubble palette: base / light / dark — bright, distinct, glossy */
 const PALETTE=[
-  {base:'#1E5BFF',light:'#5B8CFF',dark:'#0A2E99'},  // deep blue (main chat spec)
-  {base:'#1DB954',light:'#4DE37A',dark:'#0A6B2A'},  // vivid green (main chat spec)
-  {base:'#FFC400',light:'#FFD94D',dark:'#996F00'},  // rich yellow (main chat spec)
-  {base:'#FF2D2D',light:'#FF6B6B',dark:'#990000'},  // red (main chat spec)
-  {base:'#8A2BE2',light:'#B366FF',dark:'#4A0080'},  // vivid purple
-  {base:'#FF6B00',light:'#FF944D',dark:'#993D00'},  // vivid orange
-  {base:'#FF4DA6',light:'#FF85C2',dark:'#991A5C'}   // vivid pink (L71+)
+  {base:'#0B3DCC',light:'#3D6BF0',dark:'#061E66'},  // deep blue
+  {base:'#0E9E45',light:'#2BD465',dark:'#064A20'},  // deep green
+  {base:'#F5A300',light:'#FFC53D',dark:'#8A5A00'},  // deep amber gold
+  {base:'#E01111',light:'#FF5252',dark:'#7A0000'},  // deep red
+  {base:'#7A1FD1',light:'#A855F7',dark:'#3D0066'},  // deep purple
+  {base:'#E65C00',light:'#FF8A3D',dark:'#7A3000'},  // deep orange
+  {base:'#E83E8C',light:'#FF70AC',dark:'#7A1046'}   // deep pink (L31+)
 ];
 /* Super-glossy 3D bubble with strong white highlight — the signature look */
 function drawBubble(x,y,r,ci,alpha,scalePop){
@@ -377,14 +379,18 @@ function neighbors(r,c){
 
 <script>
 "use strict";
-/* ==================== 103 LEVELS — procedural, seeded, extensible ====================
-   Difficulty curve (tuned 16 Oct 2026 — BRUTAL per Anikur: even 10 levels must
-   feel hard. Old curve fell in ~10 min):
-   - colors: 3 (L1-3) -> 4 (L4-8) -> 5 (L9-15) -> 6 (L16-30) -> 7 (L31+)
-   - rows:   5 + floor(idx/7), capped at 12
+/* ==================== 1000 LEVELS — procedural, seeded, extensible ====================
+   Difficulty curve (1000 levels, BRUTAL per Anikur 16 Oct 2026):
+   - colors: 3 (L1-10) -> 4 (L11-40) -> 5 (L41-120) -> 6 (L121-300) -> 7 (L301+)
+   - rows:   6 + floor(idx/60), capped at 12  (12 rows from L361)
    - moves:  VERY tight — ~38% of bubbles early, ~34% late (+tiny bonus).
              Spray-and-pray always loses; only planned shots win. Still always
              winnable: minimum 3-match play alone clears any level.
+   - CEILING DROP: every 7 shots a new row slides in from the top (+4 moves).
+             If bubbles cross the danger line, game over.
+   - patterns rotate through 12 layout families — every level a distinct puzzle
+   Every level is guaranteed winnable: shooter only deals colors present on
+   the board, layouts are connectivity-filtered, moves are sufficient.
    - patterns rotate through 8 layout families for variety
    Every level is guaranteed winnable: shooter only deals colors present on
    the board, layouts are connectivity-filtered, moves are sufficient.
@@ -392,15 +398,15 @@ function neighbors(r,c){
    into LEVELS_OVERRIDE[idx].
 */
 const LEVELS_OVERRIDE = {}; // idx -> custom level (future hand-tuning)
-const TOTAL_LEVELS = 103;
+const TOTAL_LEVELS = 1000;
 
 function genLevel(idx){
   if(LEVELS_OVERRIDE[idx]) return LEVELS_OVERRIDE[idx];
   const lv = idx + 1;
   const rng = mulberry32(987654 + idx*13103);
-  const nColors = lv<=3?3 : lv<=8?4 : lv<=15?5 : lv<=30?6 : 7;
-  const rows = Math.min(5 + Math.floor(idx/7), 12);
-  const pattern = idx % 8;
+  const nColors = lv<=10?3 : lv<=40?4 : lv<=120?5 : lv<=300?6 : 7;
+  const rows = Math.min(6 + Math.floor(idx/60), 12);
+  const pattern = idx % 12;
   const cells = []; // [r,c,color]
   const maxC = COLS-1;
   const inDiamond=(r,c)=>{ const dr=Math.abs(r-(rows-1)/2)/((rows+1)/2), dc=Math.abs(c-4.5)/4.5; return dr+dc<=1.15; };
@@ -417,6 +423,10 @@ function genLevel(idx){
         case 5: keep=rng() < (0.96 - r*0.07); break;                           // organic blobs
         case 6: keep=(r===0||r===rows-1||c===0||c===rowLen-1); break;          // ring
         case 7: keep=Math.abs(c-(4.5+2.8*Math.sin(r*0.85)))<3.1; break;        // wave
+        case 8: keep=(r%3!==2); break;                                        // horizontal stripes
+        case 9: keep=(c%3!==2); break;                                        // vertical stripes
+        case 10: keep=(r===c||c===rowLen-1-r||r===0); break;                   // X cross + top
+        case 11: keep=rng()<0.62; break;                                      // sparse scatter
       }
       if(!keep) continue;
       cells.push([r,c,Math.floor(rng()*nColors)]);
@@ -457,7 +467,7 @@ function genLevel(idx){
   // moves: BRUTAL (16 Oct 2026, Anikur: even 10 levels must feel hard).
   // ~38% of bubbles early -> ~34% late. Always winnable: worst-case
   // minimum-match play needs nBub/3 shots; we always give more.
-  const tight = Math.min(idx/102,1); // 0..1
+  const tight = Math.min(idx/999,1); // 0..1
   let moves = Math.round(nBub*(0.38-0.04*tight)) + Math.round(5-2*tight);
   moves = clamp(moves, 12, 50);
   // star thresholds from estimated max score
@@ -567,6 +577,7 @@ function startLevel(idx){
   const sv=Save.data.power;
   G.power={bomb:sv.bomb, rainbow:sv.rainbow, row:sv.row};
   G.cur=dealColor(); G.next=dealColor();
+  G.dropCount=0; G.dropAnim=1; // ceiling-drop state (16 Oct 2026)
   G.screen='game';
 }
 function dealColor(){
@@ -669,8 +680,26 @@ function landFlying(){
   G.cur=G.next; G.next=dealColor();
   G.moves--;
   if(gridEmpty(G.grid)){ endLevel(true); return; }
+  // CEILING DROP (16 Oct 2026): every 7 shots a new row slowly descends from
+  // the top — more bubbles, real pressure. +4 moves keeps it winnable.
+  G.dropCount++;
+  if(G.dropCount>=7){ G.dropCount=0; ceilingDrop(); }
   if(boardBottomY()>DANGER_Y){ endLevel(false,'Bubbles reached the line!'); return; }
   if(G.moves<=0){ endLevel(false,'Out of moves!'); return; }
+}
+// New row slides in from the top, pushing everything down (animated in drawGrid)
+function ceilingDrop(){
+  const lr=lowestRow(G.grid);
+  for(let r=MAX_ROWS-2;r>=0;r--) for(let c=0;c<COLS;c++) G.grid[r+1][c]=G.grid[r][c];
+  for(let r=0;r<MAX_ROWS;r++) if(r%2===1) G.grid[r][COLS-1]=-1; // parity cleanup
+  const nC=G.level.nColors;
+  for(let c=0;c<COLS;c++) G.grid[0][c]=Math.floor(Math.random()*nC);
+  G.moves+=4;
+  G.dropAnim=0; // 0 -> 1 slide animation
+  // If the lowest bubbles were already at row 11+, this drop pushes them past the line
+  if(lr>=MAX_ROWS-2){ endLevel(false,'Bubbles reached the line!'); return; }
+  toast('⬇ New bubbles incoming!');
+  AudioFX.drop();
 }
 function bestNeighborColor(r,c){
   const counts={};
@@ -800,6 +829,7 @@ function onAdReward(kind){
   AudioFX.coin(); toast('🎁 ' + (names[kind]||kind) + ' earned! Tap again to use.');
 }
 function endLevel(won,reason){
+  if(G.screen==='win'||G.screen==='lose')return; // guard: never end twice
   if(won){
     const lv=G.level;
     const s=G.score>=lv.star[2]?3:G.score>=lv.star[1]?2:1;
@@ -1099,11 +1129,17 @@ function drawPowerBar(){
 }
 /* ==================== screens ==================== */
 function drawGrid(){
+  // ceiling-drop slide animation: new row glides in from the top ("aste aste nambe")
+  let yOff=0;
+  if(G.dropAnim<1){
+    const p=1-Math.pow(1-Math.min(G.dropAnim,1),2); // easeOut
+    yOff=-(1-p)*ROW_H;
+  }
   for(let r=0;r<MAX_ROWS;r++)for(let c=0;c<COLS;c++){
     const v=G.grid[r][c];
     if(v<0)continue;
     const p=cellXY(r,c);
-    drawBubble(p.x,p.y,R,v);
+    drawBubble(p.x,p.y+yOff,R,v);
   }
 }
 const TIPS=[
@@ -1176,7 +1212,7 @@ function drawHome(){
   // Sound/Music toggles are now DOM buttons (#audiotoggles), not canvas-drawn
   // (Canvas toggles were unreliable on touch - DOM buttons always work)
   ctx.fillStyle='rgba(90,100,150,0.8)';ctx.font='15px "Trebuchet MS",sans-serif';ctx.textAlign='center';
-  ctx.fillText('v2.0 • 103 levels',LW/2,772);
+  ctx.fillText('v2.0 • 1000 levels',LW/2,772);
 
 }
 function drawToggle(x,y,label,on,id){
@@ -1200,7 +1236,7 @@ const WORLDS = [
 ];
 function worldForLevel(i){
   for(const w of WORLDS) if(i>=w.from && i<=w.to) return w;
-  return WORLDS[0];
+  return WORLDS[Math.floor(i/103)%WORLDS.length]; // worlds cycle every 103 levels
 }
 // Winding path position for level i (sine wave like Candy Crush)
 function mapPos(i){
@@ -1532,6 +1568,15 @@ function handlePointerDown(e){
     }
     handleAction(id); return;
   }
+  if(G.screen==='game'&&!G.flying){
+    // Tap the NEXT-ball preview (with swap arrows) to swap — no separate button
+    const dx=p.x-352, dy=p.y-750;
+    if(dx*dx+dy*dy<38*38){
+      const tmp=G.cur; G.cur=G.next; G.next=tmp;
+      AudioFX.swap(); toast('🔄 Swapped!');
+      return;
+    }
+  }
   if(G.screen==='levels'){
     scrolling=true; return;
   }
@@ -1607,7 +1652,7 @@ function endPointer(e){
     if(G.screen==='game' && !G.flying && !G.aimCancelled && G.aimDragDist > 15){
       shoot();
     } else if(G.aimCancelled){
-      toast('Shot cancelled - tap 🔄 to change bubble');
+      toast('Shot cancelled - tap the next ball to swap');
     }
     G.aimCancelled = false;
     G.aimDots = [];
@@ -1711,6 +1756,7 @@ function update(dt){
   if(G.screen==='game'){
     G.elapsed+=dt;
     if(G.toastT>0)G.toastT-=dt;
+    if(G.dropAnim<1)G.dropAnim=Math.min(1,G.dropAnim+dt*1.8); // ~0.55s slide
     stepFlying(dt);
   }
   const n=dt*60; // framerate-independent: 1.0 at 60fps

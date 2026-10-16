@@ -576,7 +576,7 @@ function startLevel(idx){
   G.shake=0; G.elapsed=0; G.aiming=false; G.armed=null;
   const sv=Save.data.power;
   G.power={bomb:sv.bomb, rainbow:sv.rainbow, row:sv.row};
-  G.cur=dealColor(); G.next=dealColor();
+  G.cur=dealColor(); G.next=dealColor(); G.next2=dealColor(); // 3-ball swap (16 Oct 2026)
   G.dropCount=0; G.dropAnim=1; // ceiling-drop state (16 Oct 2026)
   G.screen='game';
 }
@@ -677,7 +677,7 @@ function landFlying(){
     G.grid[r][c]=color;
     resolveBoard(r,c,color);
   }
-  G.cur=G.next; G.next=dealColor();
+  G.cur=G.next; G.next=G.next2; G.next2=dealColor();
   G.moves--;
   if(gridEmpty(G.grid)){ endLevel(true); return; }
   // CEILING DROP (16 Oct 2026): every 7 shots a new row slowly descends from
@@ -733,7 +733,8 @@ function explodeBomb(r,c){
   G.score+=pts;
   const p0=cellXY(r,c);
   popup(p0.x,p0.y-10,'+'+pts,'#ffdd33',26);
-  dropFloating();
+  const dropped=dropFloating();
+  awardBombForMassClear(popped+dropped);
 }
 function resolveBoard(r,c,color){
   const cluster=floodMatch(G.grid,r,c);
@@ -751,14 +752,15 @@ function resolveBoard(r,c,color){
     popup(sx/cluster.length,sy/cluster.length,'+'+pts,'#ffffff',24);
     AudioFX.pop(G.combo);
     if(G.combo>=2) popup(sx/cluster.length,sy/cluster.length-34,'COMBO x'+G.combo+'!','#ff6b9d',26);
-    dropFloating();
+    const dropped=dropFloating();
+    awardBombForMassClear(cluster.length+dropped);
   }else{
     G.combo=0;
   }
 }
 function dropFloating(){
   const fl=floatingCells(G.grid);
-  if(!fl.length)return;
+  if(!fl.length)return 0;
   AudioFX.drop();
   for(let i=0;i<fl.length;i++){
     const p=cellXY(fl[i][0],fl[i][1]);
@@ -766,6 +768,17 @@ function dropFloating(){
     G.grid[fl[i][0]][fl[i][1]]=-1;
     G.score+=20;
   }
+  return fl.length;
+}
+// MASS-CLEAR REWARD (16 Oct 2026, Anikur): one shot clearing 10+ bubbles earns a free BOMB
+function awardBombForMassClear(total){
+  if(total<10) return;
+  G.power.bomb=(G.power.bomb||0)+1;
+  Save.data.power.bomb=G.power.bomb; Save.write();
+  updatePowerBarUI();
+  popup(LW/2,300,'💣 +1 BOMB!', '#ffdd33', 30);
+  toast('10+ bubbles at once — Bomb earned!');
+  AudioFX.coin();
 }
 function useRowClear(){
   if(G.power.row<=0){ toast('No row-clear left! Tap + to buy'); AudioFX.denied(); return; }
@@ -1040,6 +1053,13 @@ function drawHUD(){
   ctx.beginPath();ctx.moveTo(372,672);ctx.lineTo(380,678);ctx.lineTo(370,682);ctx.closePath();ctx.fill();
   ctx.beginPath();ctx.moveTo(332,704);ctx.lineTo(324,698);ctx.lineTo(334,694);ctx.closePath();ctx.fill();
   ctx.restore();
+  // second preview ball — tap to swap (3-ball system, 16 Oct 2026)
+  if(G.next2>=0) drawBubble(404,750,15,G.next2);
+  ctx.save();
+  ctx.strokeStyle='#5a6eb8'; ctx.lineWidth=3;
+  ctx.beginPath();ctx.arc(404,750,24,-0.6,1.8);ctx.stroke();
+  ctx.beginPath();ctx.arc(404,750,24,Math.PI-0.6,Math.PI+1.8);ctx.stroke();
+  ctx.restore();
   // Canvas swap button REMOVED - using DOM #btn-swap instead (reliable touch)
   // Visual arrows remain, but tap is handled by DOM button below canvas.
   // flying bubble
@@ -1148,6 +1168,7 @@ const TIPS=[
   'Use the bomb to blast a big area!',
   'Rainbow bubbles take the color they touch!',
   'Dropped bubbles give bonus points!',
+  'Pop 10+ bubbles in ONE shot to earn a FREE bomb!',
   'Plan your shots — moves are limited!'
 ];
 function drawLoading(){
@@ -1499,7 +1520,7 @@ function handleAction(id){
     case 'next': startLevel(Math.min(G.levelIdx+1,TOTAL_LEVELS-1)); AudioFX.click(); break;
     case 'retry': startLevel(G.levelIdx); AudioFX.click(); break;
     case 'swap':
-      { const tmp=G.cur; G.cur=G.next; G.next=tmp; AudioFX.swap(); toast('🔄 Swapped!'); }
+      { const t=G.cur;G.cur=G.next;G.next=G.next2;G.next2=t; AudioFX.swap(); toast('🔄 Swapped!'); }
       break;
     case 'snd':
       Save.data.sound=!Save.data.sound; Save.write();
@@ -1569,10 +1590,11 @@ function handlePointerDown(e){
     handleAction(id); return;
   }
   if(G.screen==='game'&&!G.flying){
-    // Tap the NEXT-ball preview (with swap arrows) to swap — no separate button
-    const dx=p.x-352, dy=p.y-750;
-    if(dx*dx+dy*dy<38*38){
-      const tmp=G.cur; G.cur=G.next; G.next=tmp;
+    // Tap a preview ball to swap it with current — 3 balls (16 Oct 2026)
+    const d1=Math.hypot(p.x-352,p.y-750), d2=Math.hypot(p.x-404,p.y-750);
+    if(Math.min(d1,d2)<34){
+      if(d2<d1){ const t=G.cur;G.cur=G.next2;G.next2=t; }
+      else { const t=G.cur;G.cur=G.next;G.next=t; }
       AudioFX.swap(); toast('🔄 Swapped!');
       return;
     }
@@ -1728,7 +1750,7 @@ document.getElementById('btn-row').addEventListener('click', function(){
 document.getElementById('btn-swap').addEventListener('click', function(){
   AudioFX.init(); AudioFX.resume();
   if(G.screen !== 'game' || G.flying) return;
-  const tmp = G.cur; G.cur = G.next; G.next = tmp;
+  const tmp = G.cur; G.cur = G.next; G.next = G.next2; G.next2 = tmp;
   AudioFX.swap();
   toast('🔄 Swapped!');
 });

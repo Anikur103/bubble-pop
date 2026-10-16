@@ -270,7 +270,8 @@ const PALETTE=[
   {base:'#FFC400',light:'#FFD94D',dark:'#996F00'},  // rich yellow (main chat spec)
   {base:'#FF2D2D',light:'#FF6B6B',dark:'#990000'},  // red (main chat spec)
   {base:'#8A2BE2',light:'#B366FF',dark:'#4A0080'},  // vivid purple
-  {base:'#FF6B00',light:'#FF944D',dark:'#993D00'}   // vivid orange
+  {base:'#FF6B00',light:'#FF944D',dark:'#993D00'},  // vivid orange
+  {base:'#FF4DA6',light:'#FF85C2',dark:'#991A5C'}   // vivid pink (L71+)
 ];
 /* Super-glossy 3D bubble with strong white highlight — the signature look */
 function drawBubble(x,y,r,ci,alpha,scalePop){
@@ -377,10 +378,13 @@ function neighbors(r,c){
 <script>
 "use strict";
 /* ==================== 103 LEVELS — procedural, seeded, extensible ====================
-   Difficulty curve:
-   - colors: 3 (L1-8) -> 4 (L9-20) -> 5 (L21-40) -> 6 (L41+)
-   - rows:   4 + floor(idx/11), capped at 9
-   - moves:  scaled to bubble count, generous but tightening
+   Difficulty curve (tuned 16 Oct 2026 — BRUTAL per Anikur: even 10 levels must
+   feel hard. Old curve fell in ~10 min):
+   - colors: 3 (L1-3) -> 4 (L4-8) -> 5 (L9-15) -> 6 (L16-30) -> 7 (L31+)
+   - rows:   5 + floor(idx/7), capped at 12
+   - moves:  VERY tight — ~38% of bubbles early, ~34% late (+tiny bonus).
+             Spray-and-pray always loses; only planned shots win. Still always
+             winnable: minimum 3-match play alone clears any level.
    - patterns rotate through 8 layout families for variety
    Every level is guaranteed winnable: shooter only deals colors present on
    the board, layouts are connectivity-filtered, moves are sufficient.
@@ -394,8 +398,8 @@ function genLevel(idx){
   if(LEVELS_OVERRIDE[idx]) return LEVELS_OVERRIDE[idx];
   const lv = idx + 1;
   const rng = mulberry32(987654 + idx*13103);
-  const nColors = lv<=8?3 : lv<=20?4 : lv<=40?5 : 6;
-  const rows = Math.min(4 + Math.floor(idx/11), 9);
+  const nColors = lv<=3?3 : lv<=8?4 : lv<=15?5 : lv<=30?6 : 7;
+  const rows = Math.min(5 + Math.floor(idx/7), 12);
   const pattern = idx % 8;
   const cells = []; // [r,c,color]
   const maxC = COLS-1;
@@ -450,10 +454,12 @@ function genLevel(idx){
       for(let c=0;c<rl;c++) finalCells.push([r,c,Math.floor(rng()*nColors)]); }
   }
   const nBub=finalCells.length;
-  // moves: generous early, tighter later
+  // moves: BRUTAL (16 Oct 2026, Anikur: even 10 levels must feel hard).
+  // ~38% of bubbles early -> ~34% late. Always winnable: worst-case
+  // minimum-match play needs nBub/3 shots; we always give more.
   const tight = Math.min(idx/102,1); // 0..1
-  let moves = Math.round(nBub*(0.62-0.14*tight)) + Math.round(10-4*tight);
-  moves = clamp(moves, 16, 60);
+  let moves = Math.round(nBub*(0.38-0.04*tight)) + Math.round(5-2*tight);
+  moves = clamp(moves, 12, 50);
   // star thresholds from estimated max score
   const est = nBub*14 + nBub*8;
   const star=[Math.round(est*0.28), Math.round(est*0.52), Math.round(est*0.74)];
@@ -1170,7 +1176,7 @@ function drawHome(){
   // Sound/Music toggles are now DOM buttons (#audiotoggles), not canvas-drawn
   // (Canvas toggles were unreliable on touch - DOM buttons always work)
   ctx.fillStyle='rgba(90,100,150,0.8)';ctx.font='15px "Trebuchet MS",sans-serif';ctx.textAlign='center';
-  ctx.fillText('v2.0',LW/2,772);
+  ctx.fillText('v2.0 • 103 levels',LW/2,772);
 
 }
 function drawToggle(x,y,label,on,id){
@@ -1507,7 +1513,11 @@ function handlePower(kind){
   G.powerFlash = 1.0;
 }
 // Unified input handler - works with both Pointer Events and Touch Events
+let lastPointerDown=0;
 function handlePointerDown(e){
+  const now=Date.now();
+  if(now-lastPointerDown<300) return; // Debounce: ignore if <300ms since last
+  lastPointerDown=now;
   G._lastClickTime = Date.now();
   if(e.cancelable) e.preventDefault();
   AudioFX.init(); AudioFX.resume(); Music.start();
@@ -1574,7 +1584,11 @@ cv.addEventListener('touchmove', function(e){
   const touch = e.touches[0];
   handlePointerMove({ touches: [touch] });
 }, {passive: false});
+let lastPointerUp=0;
 function endPointer(e){
+  const now=Date.now();
+  if(now-lastPointerUp<300) return;
+  lastPointerUp=now;
   if(!pDown)return;
   pDown=false;
   if(G.screen==='levels'){
